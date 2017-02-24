@@ -1,0 +1,40 @@
+{
+  "name": "timesheet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "copyfiles": "^1.2.0",
+    "del-cli": "^0.2.1",
+    "http-server": "^0.9.0",
+    "node-sass": "^4.5.0",
+    "onchange": "^3.2.1",
+    "parallelshell": "^2.0.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
+  },
+  "scripts": {
+    "start": "http-server -a localhost -p 9000 -c-1 ./dist",
+    "start:dev": "parallelshell 'npm run start' 'npm run build:watch'",
+    "html:cp": "copyup ./src/**/*.html ./dist",
+    "html:watch": "onchange 'src/**/*.html' -v -- npm run html:cp",
+    "js:build": "webpack",
+    "js:watch": "onchange 'src/**/*.js' -v -- npm run js:build",
+    "css:build": "node-sass --output-style compressed -r src/ -o dist/",
+    "css:watch": "node-sass --output-style compressed  -w -r src/ -o dist/",
+    "build": "del ./dist/* && npm run js:build && npm run html:cp  && npm run css:build",
+    "build:watch": "parallelshell 'npm run js:watch' 'npm run html:watch' 'npm run css:watch'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Young-Z/timesheet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Young-Z/timesheet/issues"
+  },
+  "homepage": "https://github.com/Young-Z/timesheet"
+}
